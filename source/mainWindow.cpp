@@ -22,8 +22,8 @@
 
 bool MainWindow::About(bool *open)
 {
-	ImGui::PushStyleColor(ImGuiCol_PopupBg, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
-	ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.1f, 0.1f, 0.1f, 1.0f));
+	ImGui::PushStyleColor(ImGuiCol_PopupBg, ImVec4(0.30f, 0.30f, 0.30f, 1.0f));
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.30f, 0.30f, 0.30f, 1.0f));
 	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
 
 	if (!ImGui::Begin("About DualSenseY", open, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoDocking))
@@ -53,11 +53,12 @@ bool MainWindow::MenuBar(int &currentController, s_scePadSettings &scePadSetting
 {
 	static bool openAbout = false;
 
+	ImGui::PushStyleColor(ImGuiCol_PopupBg, ImVec4(0.25f, 0.25f, 0.25f, 1.0f)); // gray
+
 	if (ImGui::BeginMainMenuBar())
-	{
+	{		
 		if (ImGui::BeginMenu(cstr("File")))
 		{
-
 			if (ImGui::MenuItem(cstr("Save")))
 			{
 				nfdchar_t *outPath = NULL;
@@ -213,6 +214,8 @@ bool MainWindow::MenuBar(int &currentController, s_scePadSettings &scePadSetting
 			ImGui::TextColored(ImVec4(0, 1, 0, 1), cstr("Active"));
 		else
 			ImGui::TextColored(ImVec4(1, 0, 0, 1), cstr("Inactive"));
+
+		ImGui::PopStyleColor(); //menu color
 
 		ImGui::EndMainMenuBar();
 	}
