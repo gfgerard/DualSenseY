@@ -21,6 +21,7 @@
 #include <backends/imgui_impl_glfw.h>
 #include <stb_image/stb_image.h>
 #include <algorithm>
+#include <fstream>
 
 #include "mainWindow.hpp"
 #include "strings.hpp"
@@ -246,6 +247,35 @@ bool Application::Run(const std::string& Argument1) {
 	return true;
 }
 
+ImVec2 getImguiMainWindowSize() {
+	
+	ImVec2 winSize = ImVec2(1280, 720); // default
+
+	std::ifstream ini("imgui.ini");
+	if (!ini.is_open()) {
+		return winSize;
+	}
+
+	std::string line;
+	bool windowFound = false;
+	std::string targetHeader = std::string("[Window][Main]");
+	while (std::getline(ini, line)) {
+
+		if (line.find(targetHeader) != std::string::npos) {
+			windowFound = true;
+		}
+		if (windowFound && line.compare(0, 5, "Size=") == 0) {
+			int w, h;
+			if (sscanf(line.c_str(), "Size=%d,%d", &w, &h) == 2) {
+				winSize = ImVec2((float)w, (float)h);
+				break;
+			}
+		}
+	}
+
+	return winSize;
+}
+
 void Application::InitializeWindow() {
 	#ifdef LINUX
 	glfwInitHint(GLFW_PLATFORM, GLFW_PLATFORM_X11);
@@ -257,7 +287,9 @@ void Application::InitializeWindow() {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
 
-	m_GlfwWindow = std::unique_ptr<GLFWwindow, glfwDeleter>(glfwCreateWindow(1000, 720, "DualSenseY", nullptr, nullptr));
+	ImVec2 winSize = getImguiMainWindowSize();
+
+	m_GlfwWindow = std::unique_ptr<GLFWwindow, glfwDeleter>(glfwCreateWindow(winSize.x, winSize.y, "DualSenseY", nullptr, nullptr));
 
 	if (!m_GlfwWindow) {
 		LOGE("Failed to create windown");
