@@ -22,7 +22,7 @@
 
 bool MainWindow::About(bool *open)
 {
-	ImGui::PushStyleColor(ImGuiCol_PopupBg, ImVec4(0.30f, 0.30f, 0.30f, 1.0f));
+	ImGui::PushStyleColor(ImGuiCol_PopupBg, ImVec4(0.7f, 0.7f, 0.7f, 1.0f));
 	ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(0.30f, 0.30f, 0.30f, 1.0f));
 	ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 1.0f, 1.0f, 1.0f));
 
@@ -53,7 +53,7 @@ bool MainWindow::MenuBar(int &currentController, s_scePadSettings &scePadSetting
 {
 	static bool openAbout = false;
 
-	ImGui::PushStyleColor(ImGuiCol_PopupBg, ImVec4(0.25f, 0.25f, 0.25f, 1.0f)); // gray
+	ImGui::PushStyleColor(ImGuiCol_PopupBg, ImVec4(0.4f, 0.4f, 0.4f, 1.0f)); // gray
 
 	if (ImGui::BeginMainMenuBar())
 	{		
